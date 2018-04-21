@@ -13,12 +13,8 @@ public:
 
     void EnQ(int i)
     {
-      //cout<<"Hey"<<length<<endl;
-          ara[++length] = i;
-          //cout<<length<<endl;
-          //cout<<ara[length]<<"Hey"<<endl;
-
-          if(length >= 2)reHeapUp(length);
+      ara[++length] = i;
+      if(length >= 2)reHeapUp(length);
     }
 
 
@@ -115,11 +111,6 @@ public:
 
 int main()
 {
-  minheap min_q;
 
-  min_q.EnQ(1);
-  min_q.EnQ(5);
-  min_q.EnQ(3);
-  min_q.print();
   return 0;
 }

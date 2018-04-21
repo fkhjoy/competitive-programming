@@ -14,12 +14,8 @@ public:
 
     void EnQ(int i)
     {
-    //  cout<<"Hey"<<length<<endl;
-          ara[++length] = i;
-          //cout<<length<<endl;
-          //cout<<ara[length]<<"Hey"<<endl;
-
-          if(length >= 2)reHeapUp(length);
+      ara[++length] = i;
+      if(length >= 2)reHeapUp(length);
     }
 
 
