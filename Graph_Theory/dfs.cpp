@@ -12,11 +12,12 @@ void dfs(int  s)
 {
   if(visited[s])return ;
 
+  //process s
   for(int i = 0; i < graph[s].size(); ++i)
   {
     int top = graph[s][i];
-    if(!visited[top)
-    dfs(top);
+    if(!visited[top])
+    	dfs(top);
   }
 }
 

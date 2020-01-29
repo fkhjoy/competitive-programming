@@ -1,71 +1,125 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 
 using namespace std;
 
-#define MAX 10005
 
-typedef long long int ll;
+#define si(a) scanf("%d", &a)
+#define sii(a, b) scanf("%d %d", &a, &b)
+#define siii(a, b, c) scanf("%d %d %d", &a, &b, &c)
 
-typedef pair<ll, int> pii;
+#define sl(a) scanf("%lld", &a)
+#define sll(a, b) scanf("%lld %lld", &a, &b)
+#define slll(a, b, c) scanf("%lld %lld %lld", &a, &b, &c)
 
-#define inf 1000000000
+#define outi(a) printf("%d\n", a)
+#define outii(a, b) printf("%d %d\n", a, b)
+#define outiii(a, b, c) printf("%d %d %d\n", a, b, c)
 
-vector<pii> graph[MAX];
+#define outl(a) printf("%lld\n", a)
+#define outll(a, b) printf("%lld %lld\n", a, b)
+#define outlll(a, b, c) printf("%lld %lld %lld\n", a, b, c)
 
-vector<ll> cost(MAX);
+#define cel(n, k) ((n-1)/k+1)
+#define sets(a) memset(a, -1, sizeof(a))
+#define clr(a) memset(a, 0, sizeof(a))
 
-bool visited[MAX];
+#define fr(i, n) for(ll i=0; i<n;i++)
+#define fr1(i, n) for(ll i=1; i<=n;i++)
 
-void dijkstra(int s)
-{
-    cost.assign(MAX, inf);
+#define pb push_back
+#define mp make_pair
+#define ff first
+#define ss second
+#define all(v) v.begin, v.end()
 
-    priority_queue<pii, vector<pii>, greater<pii> > pq;
+typedef long long ll;
 
-    pq.push(make_pair(0,s));
+const int N = 1e5+5;
 
-    cost[s] = 0;
+struct node{
+    ll ver, cost;
 
-    ll v, w;
+    node(ll v, ll w){
+        ver = v;
+        cost = w;
+    }
+};
 
-    while(!pq.empty())
-    {
+vector<node> v[N];
+ll n, vis[N], dist[N], edges, parent[N], cnt = 0, t;
 
-        pii temp = pq.top();
+bool operator <(node a, node b){
 
-        ll nod = temp.second;
+    return a.cost>b.cost;
+}
 
-        ll c = temp.first;
+void reset(){
+    clr(vis);
+    sets(parent);
+}
 
-        pq.pop();
+void dijkstra(ll source){
 
-        visited[nod] = true;
+    priority_queue<node> q;
+    q.push(node(source, 0));
 
-        if(c != cost[nod])continue;
+    fr1(i, n)
+        dist[i] = 10e15;
 
-        ll sz = graph[nod].size();
+    dist[source] =  0;
+    vis[source] = 1;
 
-        for(ll i = 0; i < sz; ++i)
-        {
-             v = graph[nod][i].second;
+    while(!q.empty()){
+        cnt++;
+        ll u = q.top().ver;
+        q.pop();
 
-             w = graph[nod][i].first;
+        fr(i, v[u].size()){
+            ll nd = v[u][i].ver;
 
-                if(cost[v] > (w+cost[nod]))
-                {
-                    cost[v] = w + cost[nod];
+            if(dist[u]+v[u][i].cost < dist[u]){
+                vis[nd] = 1;
+                dist[nd] = dist[u]+v[u][i].cost;
+                parent[nd] = u;
+                q.push(node(nd, dist[nd]));
 
-                    pq.push(make_pair(cost[v], v));
-
-                }
-
+            }
         }
 
     }
-
 }
 
-int main(int argc, char const *argv[]) {
-  /* code */
-  return 0;
+void print_path(ll nod){
+    if(parent[nod] == -1){
+        printf("%lld", nod);
+    }
+
+    print_path(parent[nod]);
+    printf(" %lld", nod);
+}
+
+int main(){
+    reset();
+    ll a, b, w;
+
+    sll(n, edges);
+
+    while(edges--){
+        slll(a, b, w);
+
+        v[a].pb(node(b,w));
+        v[b].pb(node(a,w));
+    }
+
+    dijkstra(1);
+
+    if(parent[n] == -1){
+        puts("-1");
+        return 0;
+    }
+
+    print_path(n);
+    puts("");
+
+    return 0;
 }

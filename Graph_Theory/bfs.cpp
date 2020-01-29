@@ -2,9 +2,10 @@
 
 using namespace std;
 
-std::vector<int> v;
-
 #define MAX 100000
+
+vector<int> v[MAX];
+
 
 bool vis[MAX];
 
@@ -43,6 +44,7 @@ void bfs(int s)
 
 int  main()
 {
+    
 
 
     return 0;
